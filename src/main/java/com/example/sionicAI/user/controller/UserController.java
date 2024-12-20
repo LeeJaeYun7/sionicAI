@@ -23,8 +23,9 @@ public class UserController {
         String email = signUpRequest.getEmail();
         String password = signUpRequest.getPassword();
         String name = signUpRequest.getName();
+        String memberType = signUpRequest.getMemberType();
 
-        userService.signUp(email, password, name);
+        userService.signUp(email, password, name, memberType);
 
         return ResponseEntity.status(HttpStatus.OK).body(SignUpResponse.of(true));
     }

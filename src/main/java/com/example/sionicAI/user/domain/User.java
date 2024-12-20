@@ -42,7 +42,9 @@ public class User {
           this.role = role;
      }
 
-     public static User of(String email, String password, String name, Role role){
+     public static User of(String email, String password, String name, String memberType){
+             Role role = Role.valueOf(memberType.toUpperCase());
+
              return User.builder()
                         .email(email)
                         .password(password)

@@ -1,6 +1,5 @@
 package com.example.sionicAI.user.service;
 
-import com.example.sionicAI.user.domain.Role;
 import com.example.sionicAI.user.domain.User;
 import com.example.sionicAI.user.dto.response.LoginResponse;
 import com.example.sionicAI.user.infrastructure.UserRepository;
@@ -19,9 +18,9 @@ public class UserService {
     private final JwtTokenUtil jwtTokenUtil;
     private final PasswordEncoder passwordEncoder;
 
-    public void signUp(String email, String password, String name){
+    public void signUp(String email, String password, String name, String memberType){
         String hashedPassword = passwordEncoder.encode(password);
-        User user = User.of(email, hashedPassword, name, Role.MEMBER);
+        User user = User.of(email, hashedPassword, name, memberType);
         userRepository.save(user);
     }
 
