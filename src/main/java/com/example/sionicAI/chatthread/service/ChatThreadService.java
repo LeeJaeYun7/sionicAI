@@ -5,7 +5,11 @@ import com.example.sionicAI.chat.dto.response.ChatResponse;
 import com.example.sionicAI.chatthread.domain.ChatThread;
 import com.example.sionicAI.chatthread.dto.response.ChatThreadResponse;
 import com.example.sionicAI.chatthread.infrastructure.ChatThreadRepository;
+import com.example.sionicAI.user.domain.User;
+import com.example.sionicAI.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,13 +23,24 @@ import java.util.stream.Collectors;
 public class ChatThreadService {
 
     private final ChatThreadRepository chatThreadRepository;
+    private final UserService userService;
+
+    private String getCurrentUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
 
     public ChatThread createChatThread(long userId, List<Chat> chatList){
         ChatThread chatThread = ChatThread.of(userId, chatList);
         return chatThreadRepository.save(chatThread);
     }
 
-    public List<ChatThreadResponse> getUserThreadList(long userId){
+    public List<ChatThreadResponse> getUserThreadList(){
+
+        String email = getCurrentUserEmail();
+        User user = userService.getUserByEmail(email);
+        long userId = user.getId();
 
         List<ChatThread> userThreadList = chatThreadRepository.findByUserId(userId);
 

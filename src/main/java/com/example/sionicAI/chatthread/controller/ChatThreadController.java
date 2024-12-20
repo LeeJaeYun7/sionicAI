@@ -18,8 +18,8 @@ public class ChatThreadController {
     private final ChatThreadService chatThreadService;
 
     @GetMapping("/api/v1/chatThread")
-    public ResponseEntity<List<ChatThreadResponse>> getUserThreadList(@RequestParam("userId") long userId){
-        List<ChatThreadResponse> userThreadList = chatThreadService.getUserThreadList(userId);
+    public ResponseEntity<List<ChatThreadResponse>> getUserThreadList(){
+        List<ChatThreadResponse> userThreadList = chatThreadService.getUserThreadList();
         return ResponseEntity.status(HttpStatus.OK).body(userThreadList);
     }
 
