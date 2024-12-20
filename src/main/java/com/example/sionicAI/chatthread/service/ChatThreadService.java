@@ -67,7 +67,12 @@ public class ChatThreadService {
         return chatThreadRepository.findTopByUserIdOrderByCreatedAtDesc(userId);
     }
 
-    public boolean deleteChatThread(long userId, LocalDateTime createdAt){
+    public boolean deleteChatThread(LocalDateTime createdAt){
+
+        String email = getCurrentUserEmail();
+        User user = userService.getUserByEmail(email);
+        long userId = user.getId();
+
         Optional<ChatThread> chatThread = chatThreadRepository.findByUserIdAndCreatedAt(userId, createdAt);
 
         if (chatThread.isPresent()) {

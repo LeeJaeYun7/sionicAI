@@ -8,7 +8,5 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class DeleteChatThreadRequest {
-
-    private long userId;
     private LocalDateTime createdAt;
 }

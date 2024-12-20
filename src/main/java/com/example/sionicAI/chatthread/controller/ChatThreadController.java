@@ -25,10 +25,8 @@ public class ChatThreadController {
 
     @DeleteMapping("/api/v1/chatThread")
     public ResponseEntity<Boolean> deleteChatThread(@RequestBody DeleteChatThreadRequest deleteChatThreadRequest){
-           long userId = deleteChatThreadRequest.getUserId();
            LocalDateTime createdAt = deleteChatThreadRequest.getCreatedAt();
-
-           boolean result = chatThreadService.deleteChatThread(userId, createdAt);
+           boolean result = chatThreadService.deleteChatThread(createdAt);
 
            return ResponseEntity.status(HttpStatus.OK).body(result);
     }
