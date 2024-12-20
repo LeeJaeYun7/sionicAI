@@ -36,13 +36,18 @@ public class ChatThreadService {
         return chatThreadRepository.save(chatThread);
     }
 
-    public List<ChatThreadResponse> getUserThreadList(){
+    public List<ChatThreadResponse> getUserThreadList(String userType){
 
-        String email = getCurrentUserEmail();
-        User user = userService.getUserByEmail(email);
-        long userId = user.getId();
+        List<ChatThread> userThreadList;
 
-        List<ChatThread> userThreadList = chatThreadRepository.findByUserId(userId);
+        if(userType.equals("ADMIN")){
+            userThreadList = chatThreadRepository.findAll();
+        }else{
+            String email = getCurrentUserEmail();
+            User user = userService.getUserByEmail(email);
+            long userId = user.getId();
+            userThreadList = chatThreadRepository.findByUserId(userId);
+        }
 
         return userThreadList.stream()
                 .map(chatThread -> {
